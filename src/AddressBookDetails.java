@@ -45,6 +45,27 @@ public class AddressBookDetails
     }
 
 
+    //Method to edit address book
+    public void editDetails()
+    {
+        System.out.println("Enter First Name: ");
+        String firstName = scan.next();
+        System.out.println("Enter Last Name: ");
+        String lastName = scan.next();
+        if(this.firstname.equals(firstName))
+        {
+            if(this.lastname.equals(lastName))
+            {
+                addDetails();
+            }
+            else
+            {
+                System.out.println("Record does not exist");
+            }
+        }
+    }
+
+
     //Method to display address book details
     public void display()
     {
