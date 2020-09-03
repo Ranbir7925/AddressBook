@@ -121,5 +121,12 @@ public class AddressBookDetails
         }
     }
 
+    //Method to Sort Address Book details Alphabetically
+    public void sortByName()
+    {
+        addressBookList.sort(Comparator.comparing(AddressBookDetails::hashCode));
+        this.display();
+    }
+
 }
 
