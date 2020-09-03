@@ -36,6 +36,7 @@ public class AddressBookDetails
         addressBook.state = scan.next();
         System.out.println("Enter your zipcode: ");
         addressBook.zipCode = scan.nextInt();
+        //To Check the 6 digit Zipcode
         int length = (int)(Math.log10(addressBook.zipCode)+1);
         while (length != 6)
         {
@@ -50,6 +51,8 @@ public class AddressBookDetails
         System.out.println("Enter your phone number: ");
         addressBook.phoneNumber = scan.next();
     }
+
+    //Overridden toString to print the details of address book
     @Override
     public String toString()
     {
@@ -57,6 +60,7 @@ public class AddressBookDetails
 
     }
 
+    //Overridden in order to avoid duplicate entries
     @Override
     public boolean equals(Object o)
     {
@@ -110,22 +114,72 @@ public class AddressBookDetails
         }
     }
 
-    //Method to display address book details
-    public void display() {
+    //Method to Display Address Book Details based on city name or state name
+    public void display()
+    {
+        boolean check=true;
+        System.out.println("Enter City or State name");
+        String place = scan.next();
         System.out.println("ADDRESS BOOK DETAILS : " );
-        System.out.println("----------------------------------------------------");
-        Iterator details = addressBookList.iterator();
-        while (details.hasNext())
+        System.out.println("-----------------------------------------------------------------------------------");
+        for (AddressBookDetails details : addressBookList)
         {
-            System.out.println(details.next());
+            if ((details.city.equals(place)) || (details.state.equals(place)))
+            {
+                check=false;
+                System.out.println(details);
+            }
+        }
+        if (check=true)
+        {
+            System.out.println("Record does not exist");
         }
     }
 
     //Method to Sort Address Book details Alphabetically
-    public void sortByName()
+    public void sortBy()
     {
-        addressBookList.sort(Comparator.comparing(AddressBookDetails::hashCode));
-        this.display();
+        System.out.println("Select the type of sorting you want to do. \n1: Sort by name \n2: Sort by ZipCode \n3: Sort by City \n4: Sort by State");
+        int select=scan.nextInt();
+        switch (select) {
+            case 1:
+                addressBookList.sort(Comparator.comparing(AddressBookDetails::hashCode));
+                break;
+            case 2:
+                Collections.sort(addressBookList, new Comparator<AddressBookDetails>() {
+                    @Override
+                    public int compare(AddressBookDetails bookDetails1, AddressBookDetails bookDetails2) {
+                        return bookDetails2.zipCode - bookDetails1.zipCode;
+                    }
+                }.reversed());
+                break;
+            case 3:
+                Collections.sort(addressBookList, new Comparator<AddressBookDetails>() {
+                    @Override
+                    public int compare(AddressBookDetails bookDetails1, AddressBookDetails bookDetails2) {
+                        return bookDetails2.city.compareTo(bookDetails1.city);
+                    }
+                }.reversed());
+                break;
+            case 4:
+                Collections.sort(addressBookList, new Comparator<AddressBookDetails>() {
+                    @Override
+                    public int compare(AddressBookDetails bookDetails1, AddressBookDetails bookDetails2) {
+                        return bookDetails2.state.compareTo(bookDetails1.state);
+                    }
+                }.reversed());
+                break;
+            default:
+                System.out.println("Invalid Input");
+                break;
+        }
+            System.out.println("ADDRESS BOOK DETAILS : ");
+            System.out.println("-----------------------------------------------------------------------------------------------------");
+            Iterator details = addressBookList.iterator();
+            while (details.hasNext())
+            {
+                System.out.println(details.next());
+            }
     }
 
 }
