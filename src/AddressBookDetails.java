@@ -45,8 +45,8 @@ public class AddressBookDetails
     }
 
 
-    //Method to edit address book
-    public void editDetails()
+    //Method to Edit and Delete from address book
+    public void editOrDeleteDetails(int check)
     {
         System.out.println("Enter First Name: ");
         String firstName = scan.next();
@@ -56,7 +56,15 @@ public class AddressBookDetails
         {
             if(this.lastname.equals(lastName))
             {
-                addDetails();
+                switch (check)
+                {
+                    case 0:
+                        addDetails();
+                        break;
+                    case 1:
+                        break;
+                }
+
             }
             else
             {
