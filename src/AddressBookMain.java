@@ -10,7 +10,7 @@ public class AddressBookMain
     public void selectTask()
     {
         boolean value = true;
-        while (value)
+        while (value == true )
         {
             System.out.println("Select the task you want to perform\n1: Add details \n2: Display Details \n3: Edit Details \n4: Delete details \n5: Exit");
             int num = scan.nextInt();
