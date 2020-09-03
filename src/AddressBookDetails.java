@@ -1,6 +1,5 @@
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class AddressBookDetails
 {
@@ -21,6 +20,9 @@ public class AddressBookDetails
         addressBook.lastname = scan.next();
         addDetails(addressBook);
         addressBookList.add(addressBook);
+        addressBookList = addressBookList.stream()
+                .distinct()
+                .collect(Collectors.toList());
     }
 
     //Method to take details from User
@@ -48,6 +50,28 @@ public class AddressBookDetails
         System.out.println("Enter your phone number: ");
         addressBook.phoneNumber = scan.next();
     }
+    @Override
+    public String toString()
+    {
+        return "NAME: "+firstname+" "+lastname+"  "+"ADDRESS: "+address+"  "+"CITY: "+city+"  "+"STATE: "+state+"  "+"ZIPCODE: "+zipCode+"  "+"PHONE NO.: "+phoneNumber;
+
+    }
+
+    @Override
+    public boolean equals(Object o)
+    {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        AddressBookDetails that = (AddressBookDetails) o;
+        return firstname.equals(that.firstname) &&
+                lastname.equals(that.lastname) ;
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return Objects.hash(firstname, lastname);
+    }
 
 
     //Method to Edit and Delete from address book
@@ -70,7 +94,11 @@ public class AddressBookDetails
                             addDetails(details);
                             break;
                         case 1:
-                            addressBookList.remove(details);
+                            for (int num =0; num<addressBookList.size();num++)
+                            {
+                                addressBookList.remove(num);
+                                break;
+                            }
                             break;
                     }
                 }
@@ -86,8 +114,10 @@ public class AddressBookDetails
     public void display() {
         System.out.println("ADDRESS BOOK DETAILS : " );
         System.out.println("----------------------------------------------------");
-        for (AddressBookDetails details : addressBookList) {
-            System.out.println("NAME: " + details.firstname + " " + details.lastname + "\nADDRESS: " + details.address + "\nCITY: " + details.city + "\nSTATE: " + details.state + "\nZIPCODE: " + details.zipCode + "\nPHONE NO: " + details.phoneNumber);
+        Iterator details = addressBookList.iterator();
+        while (details.hasNext())
+        {
+            System.out.println(details.next());
         }
     }
 
